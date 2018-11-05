@@ -5,42 +5,62 @@ from PySide2 import QtCore, QtWidgets, QtGui
 class ClickableLabel(QtWidgets.QLabel):
     def __init__(self, function):
         QtWidgets.QLabel.__init__(self)
+
         self.function = function
-        self.setFont(QtGui.QFont("Helvetica", 14, QtGui.QFont.Bold))
+        self.setFont(QtGui.QFont("Century Schoolbook L", 18, QtGui.QFont.Bold))
 
     def mousePressEvent(self, event):
         self.function()
 
+    # def enterEvent(self, event):
+    #     self.setStyleSheet("background-color:orange; color:white;")
 
-class LeftItem(QtWidgets.QHBoxLayout):
+    # def leaveEvent(self, event):
+    #     self.setStyleSheet("background-color:transparent; color:gray;")
+
+
+class LeftItem(QtWidgets.QGroupBox):
+    def enterEvent(self, event):
+        self.item_icon.setStyleSheet("background-color:orange;")
+        self.item_label.setStyleSheet("color:orange;")
+        self.item_count.setStyleSheet("background-color:orange; color:gray;")
+        self.setStyleSheet("background-color:white; margin-top:0;")
+    def leaveEvent(self, event):
+        self.item_icon.setStyleSheet("background-color:transparent;")
+        self.item_label.setStyleSheet("color:gray;")
+        self.item_count.setStyleSheet("background-color:transparent; color:gray;")
+        self.setStyleSheet("background-color:black; margin-top:0;")
+
+
     def __init__(self, item_data):
-        QtWidgets.QHBoxLayout.__init__(self)
+        QtWidgets.QGroupBox.__init__(self)
 
-        item_icon = ClickableLabel(item_data[3])
+        self.setStyleSheet("background-color:black; margin-top:0;")
+        self.setFixedSize(270, 46)
+
+        item_layout = QtWidgets.QHBoxLayout()
+        item_layout.setSpacing(0)
+        item_layout.setContentsMargins(0, 0, 0, 0)
+
+        self.item_icon = ClickableLabel(item_data[3])
         fa5_icon = qta.icon(item_data[1], color='gray', color_active='orange')
-        pixmap = fa5_icon.pixmap(32, 32)
-        item_icon.setPixmap(pixmap.scaled(32, 32))
-        item_icon.setMinimumSize(32, 32)
-        item_icon.setMaximumSize(32, 32)
-        item_icon.setStyleSheet("background-color:black;")
-        self.addWidget(item_icon)
+        self.item_icon.setPixmap(fa5_icon.pixmap(46, 46))
+        self.item_icon.setFixedSize(46, 46)
+        item_layout.addWidget(self.item_icon)
 
-        item_label = ClickableLabel(item_data[3])
-        item_label.setText(item_data[2])
-        item_label.setFont(QtGui.QFont("Century Schoolbook L", 14, QtGui.QFont.Bold))
-        item_label.setMinimumSize(130, 32)
-        item_label.setMaximumSize(130, 32)
-        item_label.setStyleSheet("background-color:black; color:gray;")
+        self.item_label = ClickableLabel(item_data[3])
+        self.item_label.setText(item_data[2])
+        self.item_label.setFixedSize(190, 32)
+        self.item_label.setStyleSheet("color:gray;")
+        item_layout.addWidget(self.item_label)
 
-        self.addWidget(item_label)
-
-        item_count = ClickableLabel(item_data[3])
-        item_count.setText('17')
-        self.setAlignment(QtCore.Qt.AlignCenter)
-        item_count.setStyleSheet("background-color:black;color:gray;")
-        self.addWidget(item_count)
+        self.item_count = ClickableLabel(item_data[3])
+        self.item_count.setText('17')
+        self.item_count.setStyleSheet("color:gray;")
+        item_layout.addWidget(self.item_count)
 
         self.setObjectName(item_data[0])
+        self.setLayout(item_layout)
 
 
 class LeftPanel(QtWidgets.QVBoxLayout):
@@ -65,11 +85,13 @@ class LeftPanel(QtWidgets.QVBoxLayout):
         self.widgee = QtWidgets.QWidget()
         QtWidgets.QVBoxLayout.__init__(self)
         self.set_lists()
+        self.setSpacing(0)
+        self.setContentsMargins(0,0,0,0)
         self.setObjectName('left_panel')
         for item_data in self.left_items_list:
             if len(item_data) == 0:
                 self.addSpacerItem(QtWidgets.QSpacerItem(0, 30, QtWidgets.QSizePolicy.Expanding))
             else:
-                self.addLayout(LeftItem(item_data))
+                self.addWidget(LeftItem(item_data))
         self.addSpacerItem(QtWidgets.QSpacerItem(0, 600, QtWidgets.QSizePolicy.Expanding))
         parent.addLayout(self)
