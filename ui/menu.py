@@ -1,3 +1,4 @@
+import qtawesome as qta
 import os, sys
 from PySide2 import QtCore, QtGui, QtWidgets
 
@@ -51,54 +52,54 @@ class MenuBar(object):
 
     def set_lists(self):
         self.new_list = [
-                ('new_peak_action',    'network-wired.svg',  'Peak',    '',         'f102', [], self.create_peak),
-                ('new_bot_action',     'robot.svg',     'Bot',     '',         'f102', [], self.create_bot),
-                ('new_command_action', 'terminal.svg',  'Command', '',         'f102', [], self.create_command),
-                ('new_event_action',   'calendar-plus.svg',  'Event',   '',         'f102', [], self.create_event),
+                ('new_peak_action',    'mdi.server-plus',  'Peak',    '',         'f102', [], self.create_peak),
+                ('new_bot_action',     'mdi.robot',     'Bot',     '',         'f102', [], self.create_bot),
+                ('new_command_action', 'mdi.console-line',  'Command', '',         'f102', [], self.create_command),
+                ('new_event_action',   'mdi.calendar-plus',  'Event',   '',         'f102', [], self.create_event),
                 ]
 
         self.export_list = [
-                ('export_all',        'file.svg',  'Everything',    '',         'f102', [], self.export_all),
+                ('export_all',        'mdi.export',  'Everything',    '',         'f102', [], self.export_all),
                 (),
-                ('export_bot',         'robot.svg',  'Bots',    '',         'f102', [], self.export_bots),
-                ('export_commands',    'terminal.svg',  'Commands','',         'f102', [], self.export_commands),
-                ('export_events',      'calendar-alt.svg',  'Events',  '',         'f102', [], self.export_events),
+                ('export_bot',         'mdi.robot',  'Bots',    '',         'f102', [], self.export_bots),
+                ('export_commands',    'mdi.console',  'Commands','',         'f102', [], self.export_commands),
+                ('export_events',      'mdi.calendar-export',  'Events',  '',         'f102', [], self.export_events),
                 ]
 
         self.file_list = [
-                ('new_action',         'folder-plus.svg',     'New',    'Ctrl+N',  'f102', self.new_list, None),
-                ('open_action',        'folder-open.svg','Open',   'Ctrl+O',  'f2d2', [],  self.open_file),
+                ('new_action',         'mdi.folder-plus',     'New',    'Ctrl+N',  'f102', self.new_list, None),
+                ('open_action',        'mdi.folder-open','Open',   'Ctrl+O',  'f2d2', [],  self.open_file),
                 (),
-                ('save_action',        'save.svg',       'Save',   'Ctrl+S',  'f2d2', [],  self.save_all),
+                ('save_action',        'mdi.content-save',      'Save',   'Ctrl+S',  'f2d2', [],  self.save_all),
                 (),
-                ('import_action',      'file-import.svg','Import', 'Ctrl+I',  'f221', [], self.import_from_pebo),
-                ('export_action',      'file-export.svg','Export', 'Ctrl+E',  'f211', self.export_list, None),
+                ('import_action',      'mdi.file-import','Import', 'Ctrl+I',  'f221', [], self.import_from_pebo),
+                ('export_action',      'mdi.file-export','Export', 'Ctrl+E',  'f211', self.export_list, None),
                 (),
-                ('print_action',       'print.svg',      'Print',  'Ctrl+P',  'f2d2', [], self.print_all),
+                ('print_action',       'mdi.printer',    'Print',  'Ctrl+P',  'f2d2', [], self.print_all),
                 (),
-                ('quit_action',        'power-off.svg',  'Quit',   'Ctrl+W',  'f311', [], self.parent.close),
+                ('quit_action',        'mdi.power',  'Quit',   'Ctrl+W',  'f311', [], self.parent.close),
                 ]
 
         self.edit_list = [
-                ('undo_action',        'undo.svg',  'Undo',      'Ctrl+Z',   'f102', [], self.open_file),
-                ('redo_action',        'redo.svg',  'Redo',      'Ctrl+Y',   'f102', [], self.open_file),
+                ('undo_action',        'mdi.undo',  'Undo',      'Ctrl+Z',   'f102', [], self.open_file),
+                ('redo_action',        'mdi.redo',  'Redo',      'Ctrl+Y',   'f102', [], self.open_file),
                 (),
-                ('cut_action',         'cut.svg',   'Cut',       'Ctrl+X',   'f102', [], self.open_file),
-                ('copy_action',        'copy.svg',  'Copy',      'Ctrl+C',   'f102', [], self.open_file),
-                ('paste_action',       'paste.svg', 'Paste',     'Ctrl+V',   'f102', [], self.open_file),
+                ('cut_action',         'mdi.content-cut',   'Cut',       'Ctrl+X',   'f102', [], self.open_file),
+                ('copy_action',        'mdi.content-copy',  'Copy',      'Ctrl+C',   'f102', [], self.open_file),
+                ('paste_action',       'mdi.content-paste', 'Paste',     'Ctrl+V',   'f102', [], self.open_file),
                 ]
 
         self.view_list = []
         self.window_list = [] 
         self.settings_list = [
-                ('appearance_action',   'paint-brush.svg',   'Appearance',     '',     'f005', [], self.appearance_settings()),
-                ('auth_action',   'lock.svg',   'Authentication',     '',     'f005', [], self.auth_settings()),
-                ('config_action',   'wrench.svg',   'General',     '',     'f005', [], self.config_settings()),
+                ('appearance_action',   'mdi.brush',   'Appearance',     '',     'f005', [], self.appearance_settings()),
+                ('auth_action',   'mdi.lock-open',   'Authentication',     '',     'f005', [], self.auth_settings()),
+                ('config_action',   'mdi.wrench',   'General',     '',     'f005', [], self.config_settings()),
                 ]
 
         self.help_list = [
-                ('help_action',        'question-circle.svg',   'Help',     'F1',     'f005', [], self.open_file),
-                ('about_action',       'info-circle.svg',   'About',    'F8',     'f005', [], self.open_file) 
+                ('help_action',        'mdi.help',   'Help',     'F1',     'f005', [], self.open_file),
+                ('about_action',       'mdi.information-variant',   'About',    'F8',     'f005', [], self.open_file) 
                 ]
 
         self.menu_bar_list = [
@@ -124,20 +125,23 @@ class MenuBar(object):
                     menu_item.addSeparator()
 
                 elif len(action_data[5]) > 0:
-                    action_item = menu_item.addMenu(QtGui.QIcon(os.path.join('images', action_data[1])), action_data[2])
+                    action_icon = qta.icon(action_data[1], color='black', color_active='orange')
+                    action_item = menu_item.addMenu(QtGui.QIcon(action_icon), action_data[2])
                     for sub_action_data in action_data[5]:
                         if len(sub_action_data) == 0:
                             action_item.addSeparator()
 
                         else: 
-                            sub_action_item = action_item.addAction(QtGui.QIcon(os.path.join('images', sub_action_data[1])), sub_action_data[2])
+                            sub_action_icon = qta.icon(sub_action_data[1], color='black', color_active='orange')
+                            sub_action_item = action_item.addAction(QtGui.QIcon(sub_action_icon), sub_action_data[2])
                             sub_action_item.setObjectName(sub_action_data[0])
                             sub_action_item.setShortcut(sub_action_data[3])
                             sub_action_item.triggered.connect(sub_action_data[6])
                             action_item.setObjectName(action_data[0])
 
                 else:
-                    action_item = menu_item.addAction(QtGui.QIcon(os.path.join('images', action_data[1])), action_data[2])
+                    action_icon = qta.icon(action_data[1], color='black', color_active='orange')
+                    action_item = menu_item.addAction(QtGui.QIcon(action_icon), action_data[2])
                     action_item.setObjectName(action_data[0])
                     action_item.setShortcut(action_data[3])
                     action_item.triggered.connect(action_data[6])

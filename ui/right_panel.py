@@ -68,5 +68,5 @@ class RightPanel(QtWidgets.QVBoxLayout):
             else:
                 self.addLayout(RightItem(item_data))
         '''
-        self.addSpacerItem(QtWidgets.QSpacerItem(0, 600, QtWidgets.QSizePolicy.Expanding))
+        self.addSpacerItem(QtWidgets.QSpacerItem(900, 0, QtWidgets.QSizePolicy.Expanding))
         parent.addLayout(self)
