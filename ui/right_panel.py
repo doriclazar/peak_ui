@@ -10,7 +10,7 @@ class RightItem(QtWidgets.QGroupBox):
         item_layout.setContentsMargins(0, 0, 0, 0)
         return item_layout
 
-    def build_item(self):
+    def build_item(self, icon_name):
         #item_label = ClickableLabel(item_data[3])
         item_label = QtWidgets.QLabel()
         item_label.setText(item_data[2])
@@ -31,6 +31,7 @@ class RightItem(QtWidgets.QGroupBox):
         item_layout = self.build_layout()
         self.setLayout(item_layout)
 
+
 class RightPanel(QtWidgets.QVBoxLayout):
     def create_navbar(self):
         pass
@@ -45,8 +46,11 @@ class RightPanel(QtWidgets.QVBoxLayout):
         nav_layout.setSpacing(0)
         nav_layout.setContentsMargins(0, 0, 0, 0)
         for nav_item_data in self.nav_label_list:
-            nav_item = ClickableLabel(nav_item_data)
-            nav_layout.addWidget(nav_item)
+            if len(nav_item_data) == 0:
+                nav_layout.addSpacerItem(QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding))
+            else:
+                nav_item = ClickableLabel(nav_item_data)
+                nav_layout.addWidget(nav_item)
         nav_layout.addSpacerItem(QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding))
 
 
@@ -61,15 +65,27 @@ class RightPanel(QtWidgets.QVBoxLayout):
         navbar.setLayout(nav_layout)
 
     def set_lists(self):
-        self.nav_label_list = [
-                {'id':'back_button',    'icon_name':'mdi.menu-left', 'text':'', 'function':self.navigate},
-                {'id':'reload_button',  'icon_name':'mdi.reload',    'text':'', 'function':self.navigate},
-                {'id':'forward_button', 'icon_name':'mdi.menu-right','text':'', 'function':self.navigate},
+        self.search_list = [
+            {'id':'search_icon',    'icon':'mdi.magnify', 'func':None, 'class':QtWidgets.QLabel,   'lst':[]},
                 ]
+        self.nav_label_list = [
+            {'id':'back_button',    'icon':'mdi.menu-left', 'func':self.navigate, 'class':QtWidgets.QLabel,   'lst':[]},
+            {'id':'forward_button', 'icon':'mdi.menu-right','func':self.navigate, 'class':QtWidgets.QLabel,   'lst':[]},
+            {'id':'reload_button',  'icon':'mdi.reload',    'func':self.navigate, 'class':QtWidgets.QLabel,   'lst':[]},
+            {},
+            {'id':'search_bar',     'icon':'mdi.file',    'func':self.navigate, 'class':QtWidgets.QGroupBox,'lst':self.search_list},
+            ]
 
         self.item_list = [
                 {}
                 ]
+
+        self.pages_list = [
+            {'id':'peaks_page',     'icon':'mdi.server',   'title':'Peaks'},
+            {'id':'bots_page',      'icon':'mdi.robot',    'title':'Bots'},
+            {'id':'commands_page',  'icon':'mdi.console',  'title':'Commands'},
+            {'id':'events_page',    'icon':'mdi.calendar', 'title':'Events'},
+            ]
         
         #self.right_items_list = [self.navbar, (), self.item_grid]
 
@@ -82,6 +98,22 @@ class RightPanel(QtWidgets.QVBoxLayout):
         self.navbar = self.build_navigation()
         self.addWidget(self.navbar)
 
+        stacked_widget = QtWidgets.QStackedWidget(objectName="stacked_widget")
+        for page_data in self.pages_list:
+            page = QtWidgets.QWidget()
+
+            page_group = QtWidgets.QGroupBox(page)
+            page_group.setTitle(page_data['title'])
+
+            page_layout = QtWidgets.QVBoxLayout()
+            page_layout.setSpacing(0)
+            page_layout.setContentsMargins(0, 0, 0, 0)
+            page_layout.addWidget(page_group)
+
+            page.setLayout(page_layout)
+            stacked_widget.addWidget(page)
+
+
         for item_data in self.item_list:
             if len(item_data) == 0:
                 self.addSpacerItem(QtWidgets.QSpacerItem(30, 0, QtWidgets.QSizePolicy.Expanding))
@@ -89,5 +121,5 @@ class RightPanel(QtWidgets.QVBoxLayout):
                 right_item = RightItem(navbar_data)
                 self.addWidget(right_item)
 
-        self.addWidget(QtWidgets.QGraphicsView())
+        self.addWidget(stacked_widget)
         parent.addLayout(self)

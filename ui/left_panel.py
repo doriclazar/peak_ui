@@ -8,17 +8,17 @@ class LeftItem(QtWidgets.QGroupBox):
             pass
         else:
             self.active=True
-            self.item_icon.setStyleSheet("background-color:orange; margin-top:0;")
-            self.item_label.setStyleSheet("color:orange;")
-            self.item_count.setStyleSheet("background-color:orange; color:gray;")
-            self.setStyleSheet("background-color:white; margin-top:0;")
+            self.item_icon.setStyleSheet("background-color:yellow; margin-top:0;")
+            self.item_label.setStyleSheet("color:yellow; border-bottom-width:3px; border-bottom-style:solid; border-color:yellow;")
+            self.item_count.setStyleSheet("color:yellow; border-bottom-width:3px; border-bottom-style:solid;")
+            self.setStyleSheet("background-color:black; margin-top:0;")
 
     def enterEvent(self, event):
         if self.active:
             pass
         else:
-            self.item_label.setStyleSheet("color:blue;")
-            self.item_count.setStyleSheet("background-color:blue; color:gray;")
+            self.item_label.setStyleSheet("color:white; border-bottom-width:3px; border-bottom-style:solid;")
+            self.item_count.setStyleSheet("color:white; border-bottom-width:3px; border-bottom-style:solid;")
 
     def leaveEvent(self, event):
         if self.active:
@@ -26,8 +26,8 @@ class LeftItem(QtWidgets.QGroupBox):
         else:
             pass
         self.item_icon.setStyleSheet("background-color:transparent;")
-        self.item_label.setStyleSheet("color:gray;")
-        self.item_count.setStyleSheet("background-color:transparent; color:gray;")
+        self.item_label.setStyleSheet("color:gray; border-bottom-width:3px; border-bottom-style:solid;")
+        self.item_count.setStyleSheet("background-color:transparent; color:gray; border-bottom-width:3px; border-bottom-style:solid; ")
         self.setStyleSheet("background-color:black; margin-top:0;")
 
     def build_layout(self):
@@ -37,22 +37,22 @@ class LeftItem(QtWidgets.QGroupBox):
         return item_layout
 
     def build_icon(self, icon_id, icon_name):
-        pix = qta.icon(icon_name, color='gray', color_active='orange')
-        item_icon = QtWidgets.QLabel(pixmap=pix.pixmap(34, 34))
+        pix = qta.icon(icon_name, color='gray', color_active='yellow')
+        item_icon = QtWidgets.QLabel(pixmap=pix.pixmap(36, 36))
         return item_icon
 
     def build_label(self, item_id, item_text):
         label_font = QtGui.QFont("Century Schoolbook L", 12, QtGui.QFont.Bold)
         item_label = QtWidgets.QLabel(text=item_text, font=label_font)
-        item_label.setFixedHeight(36)
-        item_label.setStyleSheet("color:gray;")
+        item_label.setFixedHeight(34)
+        item_label.setStyleSheet("color:gray; border-bottom-width:3px; border-bottom-style:solid; ")
         return item_label
 
     def build_item_count(self, item_id):
         item_count = QtWidgets.QLabel()
         item_count.setFont(QtGui.QFont("Century Schoolbook L", 12, QtGui.QFont.Bold))
         item_count.setText(' 17 ')
-        item_count.setStyleSheet("color:gray;")
+        item_count.setStyleSheet("color:gray; border-bottom-width:3px; border-bottom-style:solid;")
         return item_count
 
     def __init__(self, item_data):
