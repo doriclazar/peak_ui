@@ -10,7 +10,7 @@ from ui.right_panel import RightPanel
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     main_window = QtWidgets.QMainWindow()
-    main_window.resize(640, 480)
+    main_window.resize(800, 600)
     menu_bar = MenuBar(main_window)
     central_widget = QtWidgets.QWidget(main_window)
 
