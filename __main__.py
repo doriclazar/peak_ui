@@ -17,6 +17,8 @@ if __name__ == "__main__":
     content = QtWidgets.QHBoxLayout(central_widget)
     left_panel = LeftPanel(content)
     rigth_panel = RightPanel(content)
+    content.setStretch(0, 1)
+    content.setStretch(1, 4)
 
     main_window.setCentralWidget(central_widget)
     main_window.show()

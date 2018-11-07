@@ -1,20 +1,7 @@
 import os, sys
 import qtawesome as qta
+from ui.extra_items.clickable_label import ClickableLabel
 from PySide2 import QtCore, QtWidgets, QtGui
-
-class ClickableLabel(QtWidgets.QLabel):
-    def __init__(self, item_data):
-        QtWidgets.QLabel.__init__(self)
-
-        self.function = item_data['function']
-        pix = qta.icon(item_data['icon_name'], color='gray', color_active='orange')
-        self.setPixmap(pix.pixmap(34, 34))
-        self.setFont(QtGui.QFont("Century Schoolbook L", 18, QtGui.QFont.Bold))
-
-    def mousePressEvent(self, event):
-        pass
-        self.function()
-
 
 class RightItem(QtWidgets.QGroupBox):
     def build_layout(self):
@@ -50,6 +37,29 @@ class RightPanel(QtWidgets.QVBoxLayout):
     def navigate(self, position):
         pass
 
+    def build_navigation(self):
+        navbar = QtWidgets.QGroupBox()
+        navbar.setStyleSheet("background-color:yellow; margin-top:0;")
+        navbar.setFixedHeight(36)
+        nav_layout = QtWidgets.QHBoxLayout()
+        nav_layout.setSpacing(0)
+        nav_layout.setContentsMargins(0, 0, 0, 0)
+        for nav_item_data in self.nav_label_list:
+            nav_item = ClickableLabel(nav_item_data)
+            nav_layout.addWidget(nav_item)
+        nav_layout.addSpacerItem(QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding))
+
+
+        nav_layout.setStretch(0, 1)
+        nav_layout.setStretch(1, 1)
+        nav_layout.setStretch(2, 1)
+        nav_layout.setStretch(3, 20)
+
+        navbar.setLayout(nav_layout)
+        return navbar
+
+        navbar.setLayout(nav_layout)
+
     def set_lists(self):
         self.nav_label_list = [
                 {'id':'back_button',    'icon_name':'mdi.menu-left', 'text':'', 'function':self.navigate},
@@ -58,7 +68,7 @@ class RightPanel(QtWidgets.QVBoxLayout):
                 ]
 
         self.item_list = [
-                #{}
+                {}
                 ]
         
         #self.right_items_list = [self.navbar, (), self.item_grid]
@@ -67,9 +77,10 @@ class RightPanel(QtWidgets.QVBoxLayout):
         QtWidgets.QVBoxLayout.__init__(self)
 
         self.setObjectName('right_panel')
-        self.navbar = QtWidgets.QHBoxLayout()
-
         self.set_lists()
+
+        self.navbar = self.build_navigation()
+        self.addWidget(self.navbar)
 
         for item_data in self.item_list:
             if len(item_data) == 0:
@@ -78,16 +89,5 @@ class RightPanel(QtWidgets.QVBoxLayout):
                 right_item = RightItem(navbar_data)
                 self.addWidget(right_item)
 
-        navbar = QtWidgets.QGroupBox()
-        navbar.setStyleSheet("background-color:yellow; margin-top:0;")
-        navbar.setFixedSize(870, 36)
-        nav_layout = QtWidgets.QHBoxLayout()
-        for nav_item_data in self.nav_label_list:
-            nav_item = ClickableLabel(nav_item_data)
-            nav_layout.addWidget(nav_item)
-        nav_layout.addSpacerItem(QtWidgets.QSpacerItem(100, 34, QtWidgets.QSizePolicy.Expanding))
-
-        navbar.setLayout(nav_layout)
-        self.addWidget(navbar)
         self.addWidget(QtWidgets.QGraphicsView())
         parent.addLayout(self)

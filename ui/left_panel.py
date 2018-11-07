@@ -37,17 +37,14 @@ class LeftItem(QtWidgets.QGroupBox):
         return item_layout
 
     def build_icon(self, icon_id, icon_name):
-        item_icon = QtWidgets.QLabel()
         pix = qta.icon(icon_name, color='gray', color_active='orange')
-        item_icon.setPixmap(pix.pixmap(34, 34))
-        item_icon.setFixedSize(34, 34)
+        item_icon = QtWidgets.QLabel(pixmap=pix.pixmap(34, 34))
         return item_icon
 
     def build_label(self, item_id, item_text):
-        item_label = QtWidgets.QLabel()
-        item_label.setFont(QtGui.QFont("Century Schoolbook L", 12, QtGui.QFont.Bold))
-        item_label.setText(item_text)
-        item_label.setFixedSize(145, 36)
+        label_font = QtGui.QFont("Century Schoolbook L", 12, QtGui.QFont.Bold)
+        item_label = QtWidgets.QLabel(text=item_text, font=label_font)
+        item_label.setFixedHeight(36)
         item_label.setStyleSheet("color:gray;")
         return item_label
 
@@ -64,10 +61,9 @@ class LeftItem(QtWidgets.QGroupBox):
 
         self.setStyleSheet("background-color:black; margin-top:0;")
         self.setCursor(QtCore.Qt.PointingHandCursor)
-        self.setFixedSize(200, 36)
+        self.setFixedHeight(36)
 
         item_layout = self.build_layout()
-        self.setLayout(item_layout)
 
         self.item_icon = self.build_icon(icon_id = item_data['id'], icon_name = item_data['icon_name'])
         item_layout.addWidget(self.item_icon)
@@ -78,6 +74,11 @@ class LeftItem(QtWidgets.QGroupBox):
         self.item_count = self.build_item_count(item_data['id'])
         item_layout.addWidget(self.item_count)
 
+        item_layout.setStretch(0, 1)
+        item_layout.setStretch(1, 10)
+        item_layout.setStretch(2, 1)
+
+        self.setLayout(item_layout)
         self.setObjectName(item_data['id'])
 
 
@@ -90,14 +91,14 @@ class LeftPanel(QtWidgets.QVBoxLayout):
 
     def set_lists(self):
         self.left_items_list = [
-                #('search_bar',  'mdi.magnify', ' SEARCH', self.create_objects),
-                {},
-                {'id':'peak_item',   'icon_name':'mdi.server',  'text':' PEAKS',    'function':self.assign_signals},
-                {'id':'bot_item',    'icon_name':'mdi.robot',   'text':' BOTS',     'function':self.create_objects},
-                {'id':'command_item','icon_name':'mdi.console', 'text':' COMMANDS', 'function':self.create_objects},
-                {'id':'event_item',  'icon_name':'mdi.calendar','text':' EVENTS',   'function':self.assign_signals},
-                {},
-                ]
+            {'id':'search_bar',  'icon_name':'mdi.magnify', 'text':' SEARCH',  'function':self.create_objects},
+            {},
+            {'id':'peak_item',   'icon_name':'mdi.server',  'text':' PEAKS',   'function':self.assign_signals},
+            {'id':'bot_item',    'icon_name':'mdi.robot',   'text':' BOTS',    'function':self.create_objects},
+            {'id':'command_item','icon_name':'mdi.console', 'text':' COMMANDS','function':self.create_objects},
+            {'id':'event_item',  'icon_name':'mdi.calendar','text':' EVENTS',  'function':self.assign_signals},
+            {},
+            ]
 
     def __init__(self, parent):
         self.widgee = QtWidgets.QWidget()
