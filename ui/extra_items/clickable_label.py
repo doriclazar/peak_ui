@@ -7,6 +7,7 @@ class ClickableLabel(QtWidgets.QLabel):
 
         self.function = item_data['func']
         pix = qta.icon(item_data['icon'], color='gray', color_active='yellow')
+        #self.setFixedSize(36, 36)
         self.setPixmap(pix.pixmap(34, 34))
         self.setFont(QtGui.QFont("Century Schoolbook L", 18, QtGui.QFont.Bold))
 
